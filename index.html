@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SideEffects — scroll at your own risk.</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Loading Screen -->
+  <div id="loading" aria-hidden="true">
+    <div class="loading-core">
+      <div class="loading-logo">Side<span>Effects</span></div>
+      <div class="loading-sub">booting broadcast…</div>
+      <div class="loading-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+        <div class="loading-bar-fill" id="loadingFill"></div>
+      </div>
+      <div class="loading-logs" id="loadingLogs"></div>
+    </div>
+  </div>
+
+  <!-- Ambient Particles -->
+  <canvas id="particles" aria-hidden="true"></canvas>
+
+
+
+  <!-- Top Nav -->
+  <header class="topbar">
+    <div class="nav-inner">
+      <div class="brand">
+        <a href="#top" aria-label="SideEffects Home">
+          <span class="brand-s1">Side</span>
+          <span class="brand-s2">Effects</span>
+        </a>
+      </div>
+
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#featured">LIVE</a>
+        <a href="#latest">Latest</a>
+        <a href="#about">About</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button class="icon-btn" id="openTerminal" type="button" aria-label="Open system notification">
+          <span class="icon-dot" aria-hidden="true"></span>
+          <span class="icon-btn-text">Notify</span>
+        </button>
+        <button class="hamburger" id="hamburger" type="button" aria-label="Open menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <main id="top">
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true">
+        <div class="hero-noise"></div>
+        <div class="hero-glitch" data-text="SideEffects"></div>
+        <div class="hero-grid"></div>
+      </div>
+
+      <div class="hero-content">
+        <div class="hero-badge">
+          <span class="badge-dot"></span>
+          <span>internet newsroom // parody channel</span>
+        </div>
+
+        <h1 class="hero-title">
+          <span class="hero-title-main">Side</span>
+          <span class="hero-title-accent">Effects</span>
+        </h1>
+
+        <p class="hero-tagline">scroll at your own risk.</p>
+
+        <div class="hero-meta">
+          <div class="meta-pill">cinematic // clandestine</div>
+          <div class="meta-pill">live signal: <span class="meta-signal">STABLE</span></div>
+        </div>
+
+        <div class="hero-ticker" aria-label="Scrolling headlines">
+          <div class="ticker-label">HEADLINES</div>
+          <div class="ticker-track">
+            <div class="ticker-line">
+              <span>BREAK: algorithms develop opinions</span>
+              <span class="sep">•</span>
+              <span>MEME MARKET MOVES—nobody knows why</span>
+              <span class="sep">•</span>
+              <span>LIVE STREAM CONFIRMS: reality buffers</span>
+              <span class="sep">•</span>
+              <span>NEW PATCH NOTES: humans included</span>
+              <span class="sep">•</span>
+            </div>
+            <div class="ticker-line ticker-line-2" aria-hidden="true">
+              <span>BREAK: algorithms develop opinions</span>
+              <span class="sep">•</span>
+              <span>MEME MARKET MOVES—nobody knows why</span>
+              <span class="sep">•</span>
+              <span>LIVE STREAM CONFIRMS: reality buffers</span>
+              <span class="sep">•</span>
+              <span>NEW PATCH NOTES: humans included</span>
+              <span class="sep">•</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a class="btn" href="#latest">Enter the feed</a>
+          <a class="btn btn-ghost" href="#featured">Watch LIVE</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Breaking News Bar -->
+    <section class="breaking" aria-label="Breaking news">
+      <div class="breaking-inner">
+        <div class="breaking-indicator" aria-hidden="true">
+          <span class="blink"></span>
+          <span class="indicator-text">BREAKING</span>
+        </div>
+        <div class="breaking-marquee">
+          <div class="marquee">
+            <span>⚠ SIGNAL SPIKE — </span>
+            <span>sideeffects reported “glitchy calm” in downtown</span>
+            <span class="dot">•</span>
+            <span>press release: “this is satire, but still—watch”</span>
+            <span class="dot">•</span>
+            <span>update: the internet has regenerated</span>
+            <span class="dot">•</span>
+            <span>⚠ SIGNAL SPIKE — </span>
+            <span>sideeffects reported “glitchy calm” in downtown</span>
+            <span class="dot">•</span>
+            <span>press release: “this is satire, but still—watch”</span>
+            <span class="dot">•</span>
+            <span>update: the internet has regenerated</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Featured Video Section -->
+    <section id="featured" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Featured Signal</h2>
+          <div class="head-rule"></div>
+          <div class="live-badge" aria-label="Live">
+            <span class="live-pulse" aria-hidden="true"></span>
+            <span class="live-text">LIVE</span>
+          </div>
+        </div>
+
+        <div class="video-wrap">
+          <div class="video-frame">
+            <div class="video-corners" aria-hidden="true"></div>
+            <div class="video-player">
+              <iframe
+                title="SideEffects Live"
+                src="https://www.youtube.com/embed/I68FzLgeLzU?si=UVwG_Sx_bNW0osua"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+          </div>
+
+          <aside class="video-side">
+            <div class="glass-panel">
+              <div class="panel-title">Now Broadcasting</div>
+              <div class="panel-row"><span class="k">Channel</span><span class="v"><a href="https://www.youtube.com/@SE-DOTCOM">say_side_effect</a>
+</span></div>
+              <div class="panel-row"><span class="k">Topic</span><span class="v">digital riots & soft panic</span></div>
+              <div class="panel-row"><span class="k">Status</span><span class="v"><span class="ok">OK</span> / <span class="warn">unstable</span></span></div>
+              <div class="panel-note">Hover the feed. The feed might hover back.</div>
+            </div>
+
+            <div class="glass-panel mini">
+              <div class="panel-title">System Snapshot</div>
+              <div class="terminal-lines" aria-hidden="true">
+                <div><span class="t-prompt">$</span> ping 127.0.0.1</div>
+                <div><span class="t-ok">OK</span> latency: 13ms</div>
+                <div><span class="t-ok">OK</span> memes: cached</div>
+                <div><span class="t-warn">WARN</span> reality: buffering</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- Latest Posts / Grid -->
+    <section id="latest" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>Latest Posts</h2>
+          <div class="head-rule"></div>
+          <div class="subtle">latest clips • tuned for the feed</div>
+        </div>
+
+        <div class="yt-grid" aria-label="Latest YouTube clips">
+          <div class="yt-card reveal">
+            <div class="yt-frame">
+              <iframe
+                title="SideEffects Clip 01"
+                src="https://www.youtube.com/embed/miMrxEzJBpo?si=K7vqfnGy8VgXFJhq"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="yt-meta">
+              <span class="cat">Breaking</span>
+              <span class="time">NOW</span>
+            </div>
+            <h3 class="title"></h3>
+          </div>
+
+          <div class="yt-card reveal">
+            <div class="yt-frame">
+              <iframe
+                title="SideEffects Clip 02"
+                src="https://www.youtube.com/embed/gcUCsK5JdaY?si=g6p8Q47TmxMS0TQ1"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+
+
+            <div class="yt-meta">
+              <span class="cat">Tech</span>
+              <span class="time">4 HOURS AGO</span>
+            </div>
+            <h3 class="title"></h3>
+          </div>
+
+          <div class="yt-card reveal">
+            <div class="yt-frame">
+              <iframe
+                title="SideEffects Clip 03"
+                src="https://www.youtube.com/embed/I68FzLgeLzU?si=OaWCHTT4j0-KNOdk"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+
+
+
+           <!-- <div class="yt-meta">
+              <span class="cat">Culture</span>
+              <span class="time">1 DAY AGO</span>
+            </div>
+            <h3 class="title"></h3>
+          </div>
+
+          <div class="yt-card reveal">
+            <div class="yt-frame">
+              <iframe
+                title="SideEffects Clip 04"
+                src="https://www.youtube.com/embed/kJQP7kiw5Fk?rel=0"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allowfullscreen>
+              </iframe>
+            </div>
+            <div class="yt-meta">
+              <span class="cat">Finance</span>
+              <span class="time">2 DAYS AGO</span>
+            </div>
+            <h3 class="title">Markets React to One Meme Screenshot</h3>
+          </div>
+        </div>
+      </div>-->
+    </section>
+
+
+    <!-- About -->
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>About</h2>
+          <div class="head-rule"></div>
+          <div class="subtle">underground broadcast</div>
+        </div>
+
+        <div class="about">
+          <div class="about-card glass-panel">
+            <div class="about-text">
+              <p class="lead">A digital corner documenting modern chaos, internet culture, parody, and headlines.</p>
+              <p class="muted">No sources. No apologies. Just vibes, glitch typography, and a newsroom aesthetic that remembers it’s on the internet.</p>
+              <!--<div class="about-tags">
+                <span class="tag">cyberpunk</span>
+                <span class="tag">analog horror</span>
+                <span class="tag">meme energy</span>
+                <span class="tag">gen z</span>
+              </div>-->
+            </div>
+          </div>
+
+          <div class="about-card glass-panel">
+            <div class="about-text">
+              <div class="panel-title">Disclaimer</div>
+              <p class="muted">This site is parody and for aesthetic demo purposes. Dummy content only. Video embeds may reflect unrelated channels.</p>
+              <button class="btn btn-ghost" id="showNotification" type="button">Trigger system popup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-top">
+          <div class="footer-brand">
+            <div class="glitch-footer" data-text="SideEffects">SideEffects</div>
+            <div class="footer-muted">mysterious broadcast • clean & premium</div>
+          </div>
+
+          <div class="footer-links" aria-label="Social links">
+         
+            <a href="https://www.youtube.com/@SE-DOTCOM" target="_blank" class="foot-link">YouTube</a>
+           
+            <a href="https://www.instagram.com/say_side_effect/" target="_blank" class="foot-link">INSTAGRAM</a>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <span>© <span id="year"></span> SideEffects. All signal rights reserved.</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Terminal Notification Popups -->
+    <div id="toastStack" aria-live="polite" aria-relevant="additions"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
