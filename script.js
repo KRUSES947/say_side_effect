@@ -2,13 +2,15 @@ const $ = (s, el=document) => el.querySelector(s);
 const $$ = (s, el=document) => Array.from(el.querySelectorAll(s));
 
 // ===== Year =====
-document.getElementById('year').textContent = new Date().getFullYear();
+const yearEl = document.getElementById('year');
+if(yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ===== Loading screen =====
 (function loading(){
   const loadingEl = document.getElementById('loading');
   const fill = document.getElementById('loadingFill');
   const logs = document.getElementById('loadingLogs');
+  if(!loadingEl || !fill || !logs) return;
   const steps = [
     'synthesizing signal…',
     'aligning glitch typography…',
@@ -33,7 +35,12 @@ document.getElementById('year').textContent = new Date().getFullYear();
         loadingEl.style.transition = 'opacity .35s ease, transform .35s ease';
         loadingEl.style.opacity = '0';
         loadingEl.style.transform = 'scale(.98)';
-        setTimeout(()=> loadingEl.remove(), 400);
+        setTimeout(()=> {
+          loadingEl.remove();
+          if(typeof window.showBirthdayModal === 'function'){
+            window.showBirthdayModal();
+          }
+        }, 400);
       }, 500);
     }
   }, 220);
@@ -237,13 +244,35 @@ function escapeHtml(str){
   const links = document.querySelector('.nav-links');
   if(!burger || !links) return;
 
-  burger.addEventListener('click', ()=>{
-    links.classList.toggle('active');
+  const toggle = (forceClose = false) => {
+    const shouldOpen = forceClose ? false : !links.classList.contains('active');
+    links.classList.toggle('active', shouldOpen);
+    burger.classList.toggle('active', shouldOpen);
+    burger.setAttribute('aria-expanded', shouldOpen ? 'true' : 'false');
+  };
+
+  burger.addEventListener('click', (e)=>{
+    e.stopPropagation();
+    toggle();
   });
 
-  // close on click
+  // close on link click
   links.querySelectorAll('a').forEach(a=>{
-    a.addEventListener('click', ()=>links.classList.remove('active'));
+    a.addEventListener('click', ()=>toggle(true));
+  });
+
+  // close on click outside
+  document.addEventListener('click', (e)=>{
+    if(links.classList.contains('active') && !links.contains(e.target) && !burger.contains(e.target)){
+      toggle(true);
+    }
+  });
+
+  // close on Escape key
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && links.classList.contains('active')){
+      toggle(true);
+    }
   });
 })();
 
@@ -294,10 +323,12 @@ function escapeHtml(str){
   });
   if(openTerminal) openTerminal.addEventListener('click', ()=>{
     const samples = [
-      'integrity check: suspiciously stable.',
-      'buffer overrun detected near the feelings section.',
-      'signal routing complete. enjoy the chaos.',
-      'new headlines downloaded. (still fake.)'
+      '🎂 Birthday check: Abhishek celebration protocol 100% active!',
+      'Special tribute: करोड़ो की बस्ती में एक दिलदार हस्ती — श्री अभिषेक!',
+      'integrity check: suspiciously festive & legendary.',
+      'buffer overrun detected near the birthday cake section 🎂',
+      'signal routing complete: Modi Ji & Rahul Gandhi Ji wishes delivered.',
+      'new headlines downloaded. (Abhishek Birthday Special Edition 🎉)'
     ];
     const pick = samples[Math.floor(Math.random()*samples.length)];
     pushToast('TERMINAL', pick);
@@ -315,5 +346,46 @@ function escapeHtml(str){
     });
   }, {threshold:.14});
   els.forEach(el=>obs.observe(el));
+})();
+
+// ===== Birthday Modal Greeting =====
+(function birthdayModalInit(){
+  const modal = document.getElementById('birthdayModal');
+  if(!modal) return;
+
+  const closeBtn = document.getElementById('closeBirthdayModal');
+  const dismissBtn = document.getElementById('dismissBirthdayBtn');
+  const backdrop = modal.querySelector('.birthday-modal-backdrop');
+
+  let shown = false;
+
+  window.showBirthdayModal = function(){
+    if(shown) return;
+    shown = true;
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+  };
+
+  window.closeBirthdayModal = function(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
+  };
+
+  if(closeBtn) closeBtn.addEventListener('click', window.closeBirthdayModal);
+  if(dismissBtn) dismissBtn.addEventListener('click', window.closeBirthdayModal);
+  if(backdrop) backdrop.addEventListener('click', window.closeBirthdayModal);
+
+  window.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && modal.classList.contains('active')){
+      window.closeBirthdayModal();
+    }
+  });
+
+  // Fallback: If loading screen did not run or was skipped, show popup automatically
+  setTimeout(()=>{
+    if(!shown) window.showBirthdayModal();
+  }, 2400);
 })();
 

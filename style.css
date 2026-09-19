@@ -95,8 +95,41 @@ a{color:inherit;text-decoration:none}
 .icon-dot{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 18px rgba(255,45,45,.35)}
 .icon-btn-text{font-size:.9rem}
 
-.hamburger{display:none;flex-direction:column;gap:6px;background:transparent;border:0;cursor:pointer}
-.hamburger span{width:26px;height:2px;background:#fff;opacity:.85}
+.hamburger{
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  gap:5px;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+  width:40px;
+  height:40px;
+  border-radius:8px;
+  transition:background .2s var(--ease);
+}
+.hamburger:hover{
+  background:rgba(255,255,255,.08);
+}
+.hamburger span{
+  width:22px;
+  height:2px;
+  background:#fff;
+  opacity:.9;
+  border-radius:2px;
+  transition:transform .25s var(--ease),opacity .2s ease;
+}
+.hamburger.active span:nth-child(1){
+  transform:translateY(7px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2){
+  opacity:0;
+  transform:translateX(-8px);
+}
+.hamburger.active span:nth-child(3){
+  transform:translateY(-7px) rotate(-45deg);
+}
 
 /* ===== Hero ===== */
 .hero{position:relative;min-height:82vh;display:flex;align-items:flex-end;overflow:hidden;padding:60px 0 70px}
@@ -191,6 +224,24 @@ a{color:inherit;text-decoration:none}
 .live-pulse{width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 24px rgba(255,45,45,.4);animation:pulse 1.2s steps(2) infinite}
 @keyframes pulse{0%,100%{transform:scale(.9);opacity:.35}50%{transform:scale(1.12);opacity:1}}
 .live-text{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:1.4rem;color:#fff}
+
+/* ===== Latest YouTube Clips Grid ===== */
+.yt-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.yt-card{
+  height:100%;
+  border-radius:var(--radius2);
+  border:1px solid rgba(255,255,255,.10);
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.025));
+  overflow:hidden;
+  box-shadow:0 18px 50px rgba(0,0,0,.25);
+  display:flex;
+  flex-direction:column;
+  transition:transform .2s var(--ease),border-color .2s var(--ease),box-shadow .2s var(--ease);
+}
+.yt-card:hover{transform:translateY(-4px);border-color:rgba(255,45,45,.35);box-shadow:0 25px 70px rgba(0,0,0,.4)}
+.yt-frame{aspect-ratio:16/9;background:#000;position:relative;overflow:hidden}
+.yt-frame iframe{width:100%;height:100%;border:0;display:block}
+.yt-meta{display:flex;align-items:center;justify-content:space-between;padding:14px 16px}
 
 /* ===== Latest Grid ===== */
 .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
@@ -299,19 +350,542 @@ a{color:inherit;text-decoration:none}
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
 .reveal.visible{opacity:1;transform:translateY(0)}
 
-/* ===== Responsive ===== */
+/* ===== Responsive System ===== */
 @media (max-width: 980px){
-  .video-wrap{grid-template-columns:1fr;}
-  .about{grid-template-columns:1fr;}
+  .video-wrap{grid-template-columns:1fr;gap:20px}
+  .bday-featured-wrap{grid-template-columns:1fr;gap:20px}
+  .about{grid-template-columns:1fr;gap:16px}
   .post-card{grid-column: span 6;}
-  .breaking-indicator{margin-left:4.5vw}
+  .yt-grid{grid-template-columns:repeat(2, 1fr);gap:16px}
+  .breaking-indicator{margin-left:4vw}
 }
-@media (max-width: 700px){
-  .nav-links{display:none;position:absolute;top:72px;left:0;right:0;background:rgba(0,0,0,.8);backdrop-filter:blur(14px);border-bottom:1px solid rgba(255,255,255,.08);padding:16px 4.5vw;flex-direction:column;gap:14px}
-  .nav-links.active{display:flex}
+
+@media (max-width: 768px){
+  .topbar{height:64px}
+  .nav-inner{height:64px;padding:0 4vw}
+  .brand-s1, .brand-s2{font-size:2rem}
+  .nav-edition-tag{font-size:0.65rem;letter-spacing:1px;padding-left:8px;margin-left:6px}
+  
+  .nav-links{
+    display:none;
+    position:absolute;
+    top:64px;
+    left:0;
+    right:0;
+    background:rgba(8,8,10,0.98);
+    backdrop-filter:blur(20px);
+    -webkit-backdrop-filter:blur(20px);
+    border-bottom:1px solid rgba(255,255,255,.12);
+    padding:18px 5vw;
+    flex-direction:column;
+    gap:14px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.85);
+    z-index:999;
+  }
+  .nav-links.active{
+    display:flex;
+    animation:navIn 0.25s var(--ease) both;
+  }
+  @keyframes navIn{
+    from{opacity:0;transform:translateY(-8px)}
+    to{opacity:1;transform:translateY(0)}
+  }
+  .nav-links a{
+    font-size:1rem;
+    padding:10px 0;
+    border-bottom:1px solid rgba(255,255,255,0.06);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+  }
   .hamburger{display:flex}
   .icon-btn-text{display:none}
+  .icon-btn{padding:8px 12px}
+
+  .hero{padding:40px 0 45px;min-height:auto}
+  .hero-glitch{font-size:clamp(4rem, 16vw, 8.5rem);top:6%}
+  .hero-title{font-size:clamp(2.5rem, 8.5vw, 4.8rem)}
+  .hero-tagline{font-size:0.95rem}
+  .hero-meta{gap:8px}
+  .meta-pill{padding:8px 12px;font-size:0.8rem}
+  .hero-cta{gap:10px}
+  .hero-cta .btn{padding:11px 18px;font-size:0.9rem}
+
+  .breaking-marquee .marquee{animation-duration:22s}
+  .section{padding:50px 0}
+  .section-head{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:20px}
+  .section-head h2{font-size:2.1rem}
+  .head-rule{width:100%;height:1px}
+  .live-badge{align-self:flex-start}
+
+  .bday-featured-img{max-height:380px}
   .post-card{grid-column: span 12;}
-  .hero{padding-bottom:44px}
 }
+
+@media (max-width: 540px){
+  .yt-grid{grid-template-columns:1fr;gap:16px}
+}
+
+@media (max-width: 480px){
+  .container{padding:0 4vw}
+  .nav-inner{padding:0 3.5vw}
+  .brand-s1, .brand-s2{font-size:1.75rem}
+  .nav-edition-tag{display:none}
+  .nav-page-counter{font-size:0.68rem;padding:4px 8px}
+  .nav-actions{gap:8px}
+  .icon-btn{padding:7px 9px}
+
+  .hero-ticker{flex-direction:column;border-radius:var(--radius)}
+  .ticker-label{padding:8px 12px;font-size:0.72rem;justify-content:flex-start;border-bottom:1px solid rgba(255,255,255,0.08)}
+  .ticker-line{padding:10px 0;font-size:0.8rem}
+
+  .hero-cta{flex-direction:column;width:100%;gap:10px}
+  .hero-cta .btn{width:100%;justify-content:center;padding:13px 16px;font-size:0.9rem}
+
+  .breaking-indicator{padding:6px 10px;font-size:0.75rem;margin-left:3vw}
+  .breaking-marquee{font-size:0.82rem}
+
+  .bday-featured-frame{padding:10px;border-radius:12px}
+  .bday-featured-img{max-height:290px}
+  .panel-row{flex-direction:column;align-items:flex-start;gap:4px;padding:8px 0}
+  .panel-row .v{text-align:left;font-size:0.88rem}
+  .panel-row .k{font-size:0.75rem}
+
+  .footer-top{flex-direction:column;align-items:flex-start;gap:18px}
+  .footer-links{flex-direction:column;gap:8px;width:100%}
+  .foot-link{width:100%;text-align:center;display:block;padding:10px 14px}
+  .footer-brand .glitch-footer{font-size:2.2rem}
+}
+
+@media (max-width: 360px){
+  .brand-s1, .brand-s2{font-size:1.55rem}
+  .hero-title{font-size:2.2rem}
+  .bday-featured-img{max-height:240px}
+}
+
+/* ===== Birthday Greeting Modal ===== */
+.birthday-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 18px;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.4s var(--ease), visibility 0.4s var(--ease);
+}
+
+.birthday-modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.birthday-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  cursor: pointer;
+}
+
+.birthday-modal-container {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 490px;
+  max-height: 94vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.birthday-modal-card {
+  position: relative;
+  background: linear-gradient(180deg, rgba(26, 26, 30, 0.96), rgba(12, 12, 15, 0.98));
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  box-shadow: 0 0 35px rgba(255, 45, 45, 0.25), 0 0 50px rgba(255, 215, 0, 0.15), 0 30px 80px rgba(0, 0, 0, 0.85);
+  border-radius: var(--radius2);
+  padding: 24px 22px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  overflow-y: auto;
+  max-height: 92vh;
+  transform: scale(0.92) translateY(18px);
+  transition: transform 0.4s var(--ease);
+}
+
+.birthday-modal-overlay.active .birthday-modal-card {
+  transform: scale(1) translateY(0);
+}
+
+/* Close Button */
+.birthday-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.2s, border-color 0.2s;
+  z-index: 3;
+}
+
+.birthday-close-btn:hover {
+  background: rgba(255, 45, 45, 0.3);
+  border-color: var(--accent);
+  transform: scale(1.08);
+}
+
+/* Header */
+.birthday-card-header {
+  margin-bottom: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.birthday-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(90deg, rgba(255, 45, 45, 0.18), rgba(255, 215, 0, 0.18));
+  border: 1px solid rgba(255, 215, 0, 0.45);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #ffd700;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  box-shadow: 0 0 15px rgba(255, 215, 0, 0.15);
+}
+
+.birthday-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 6vw, 3rem);
+  letter-spacing: 2.5px;
+  color: #fff;
+  text-shadow: 0 0 25px rgba(255, 215, 0, 0.45), 0 0 40px rgba(255, 45, 45, 0.35);
+  line-height: 1;
+  margin: 0;
+}
+
+.birthday-subtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 6px;
+  letter-spacing: 0.2px;
+}
+
+/* Image */
+.birthday-image-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 8px 0 16px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65);
+  border: 2px solid rgba(255, 215, 0, 0.35);
+  background: #000;
+}
+
+.birthday-image {
+  max-height: 52vh;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+  border-radius: inherit;
+}
+
+/* Footer Action */
+.birthday-card-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.birthday-action-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #ff2d2d, #ff5500);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  box-shadow: 0 6px 22px rgba(255, 45, 45, 0.45);
+  transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease), filter 0.2s var(--ease);
+}
+
+.birthday-action-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+  box-shadow: 0 10px 30px rgba(255, 45, 45, 0.6);
+}
+
+.btn-arrow {
+  font-size: 1.1rem;
+  transition: transform 0.2s var(--ease);
+}
+
+.birthday-action-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Confetti */
+.birthday-confetti {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: var(--radius2);
+}
+
+.confetti-piece {
+  position: absolute;
+  width: 8px;
+  height: 14px;
+  opacity: 0.85;
+  border-radius: 2px;
+  animation: confettiFall 4s ease-in-out infinite;
+}
+
+.c1 { left: 8%; background: #ff2d2d; animation-delay: 0s; transform: rotate(15deg); }
+.c2 { left: 22%; background: #ffd700; animation-delay: 0.8s; transform: rotate(-25deg); }
+.c3 { left: 38%; background: #0a84ff; animation-delay: 1.4s; transform: rotate(45deg); }
+.c4 { left: 54%; background: #ff5500; animation-delay: 0.3s; transform: rotate(10deg); }
+.c5 { left: 70%; background: #4cd964; animation-delay: 1.9s; transform: rotate(-35deg); }
+.c6 { left: 84%; background: #ffd700; animation-delay: 0.6s; transform: rotate(50deg); }
+.c7 { left: 92%; background: #ff2d2d; animation-delay: 1.2s; transform: rotate(-15deg); }
+.c8 { left: 48%; background: #e040fb; animation-delay: 2.1s; transform: rotate(30deg); }
+
+@keyframes confettiFall {
+  0% { transform: translateY(-30px) rotate(0deg); opacity: 0; }
+  20% { opacity: 0.95; }
+  80% { opacity: 0.95; }
+  100% { transform: translateY(600px) rotate(360deg); opacity: 0; }
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+@media (max-height: 720px) {
+  .birthday-modal-card {
+    padding: 16px 16px 14px;
+  }
+  .birthday-title {
+    font-size: 1.9rem;
+  }
+  .birthday-subtitle {
+    font-size: 0.9rem;
+  }
+  .birthday-image {
+    max-height: 44vh;
+  }
+  .birthday-action-btn {
+    padding: 10px 22px;
+    font-size: 0.88rem;
+  }
+}
+
+/* ===== Birthday Featured Section Showcase ===== */
+.bday-featured-wrap {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 26px;
+  align-items: start;
+  margin-bottom: 32px;
+}
+
+.bday-featured-frame {
+  border-radius: var(--radius2);
+  background: radial-gradient(circle at center, rgba(255, 45, 45, 0.12), rgba(12, 12, 14, 0.95));
+  border: 1px solid rgba(255, 215, 0, 0.35);
+  box-shadow: 0 0 35px rgba(255, 45, 45, 0.22), 0 0 50px rgba(255, 215, 0, 0.15), var(--shadow);
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 18px;
+}
+
+.bday-featured-img {
+  max-height: 520px;
+  width: auto;
+  max-width: 100%;
+  display: block;
+  object-fit: contain;
+  border-radius: var(--radius);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7);
+  transition: transform 0.4s var(--ease);
+}
+
+.bday-featured-frame:hover .bday-featured-img {
+  transform: scale(1.02);
+}
+
+.bday-glass-panel {
+  border-color: rgba(255, 215, 0, 0.28) !important;
+  background: linear-gradient(180deg, rgba(255, 215, 0, 0.06), rgba(255, 45, 45, 0.04), rgba(255, 255, 255, 0.03)) !important;
+}
+
+.bday-vip-name {
+  color: #ffd700 !important;
+  font-size: 1.15rem !important;
+  font-weight: 950 !important;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 16px rgba(255, 215, 0, 0.45);
+}
+
+.bday-live-pill {
+  border-color: rgba(255, 215, 0, 0.45) !important;
+  background: rgba(255, 215, 0, 0.12) !important;
+}
+
+.bday-live-pill .live-text {
+  color: #ffd700 !important;
+}
+
+.bday-stream-subblock {
+  margin-top: 36px;
+  padding-top: 28px;
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+}
+
+.bday-stream-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.subblock-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.subblock-title {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 1.5px;
+  font-size: 1.45rem;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+@media (max-width: 980px) {
+  .bday-featured-wrap {
+    grid-template-columns: 1fr;
+  }
+  .bday-featured-img {
+    max-height: 420px;
+  }
+}
+
+/* Connection Styles to The Birthday File */
+.nav-bday-file {
+  position: relative;
+  color: #fff !important;
+}
+
+.nav-file-badge {
+  font-size: 0.65rem;
+  background: rgba(217, 138, 157, 0.25);
+  border: 1px solid #d98a9d;
+  color: #d98a9d;
+  padding: 2px 6px;
+  border-radius: 999px;
+  margin-left: 6px;
+  letter-spacing: 1px;
+}
+
+.btn-editorial {
+  border-color: rgba(217, 138, 157, 0.45);
+  background: rgba(217, 138, 157, 0.08);
+  color: #fff;
+  transition: all 0.2s var(--ease);
+}
+
+.btn-editorial:hover {
+  border-color: #d98a9d;
+  background: rgba(217, 138, 157, 0.2);
+  box-shadow: 0 0 24px rgba(217, 138, 157, 0.3);
+  transform: translateY(-2px);
+}
+
+.bday-editorial-panel {
+  border: 1px solid rgba(217, 138, 157, 0.35) !important;
+  background: linear-gradient(180deg, rgba(217, 138, 157, 0.08), rgba(0, 0, 0, 0.6)) !important;
+}
+
+.btn-editorial-card {
+  display: block;
+  text-align: center;
+  margin-top: 14px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(217, 138, 157, 0.25), rgba(255, 45, 45, 0.25));
+  border: 1px solid rgba(217, 138, 157, 0.5);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 0.86rem;
+  letter-spacing: 0.5px;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+}
+
+.btn-editorial-card:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(90deg, rgba(217, 138, 157, 0.4), rgba(255, 45, 45, 0.4));
+  border-color: #ffffff;
+}
+
+.birthday-editorial-link {
+  margin-top: 14px;
+  display: block;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.8px;
+  color: #d98a9d;
+  text-transform: uppercase;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  transition: color 0.2s ease;
+}
+
+.birthday-editorial-link:hover {
+  color: #ffffff;
+}
+
+
+
 
